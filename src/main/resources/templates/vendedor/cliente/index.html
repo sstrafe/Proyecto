@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Cliente</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-primary navbar-dark">
+    <a class="navbar-brand">Ventas de Don Pepe</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            
+            <li class="nav-item"><a class="nav-link" th:href="@{/vendedor/cliente}">Mantener Cliente</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/vendedor/producto}">Consultar Producto</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/vendedor/proveedor}">Consultar Proveedor</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/vendedor/venta}">Generar Reportes</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <h2>Lista de Cliente</h2>
+
+    <!-- Botón para crear nuevo cliente -->
+    <div class="mb-3">
+		<a class="btn btn-primary mb-3" th:href="@{/vendedor/cliente/new}">Nuevo Cliente</a>
+    </div>
+
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>DNI</th>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="cliente : ${clientes}">
+                <td th:text="${cliente.idClie}"></td>
+                <td th:text="${cliente.dni}"></td>
+                <td th:text="${cliente.nombre}"></td>
+                <td th:text="${cliente.direccionClie}"></td>
+                <td th:text="${cliente.telefono}"></td>
+                <td>
+					<a th:href="@{/vendedor/cliente/edit/{id}(id=${cliente.idClie})}" class="btn btn-warning btn-sm">Editar</a>
+					<a th:href="@{/vendedor/cliente/delete/{id}(id=${cliente.idClie})}" class="btn btn-danger btn-sm" onclick="return confirm('¿Está seguro de eliminar este cliente?')">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

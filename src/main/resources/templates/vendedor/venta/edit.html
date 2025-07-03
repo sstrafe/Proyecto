@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Venta</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-primary navbar-dark">
+    <a class="navbar-brand">Ventas de Don Pepe</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav">
+      
+            <li class="nav-item"><a class="nav-link" th:href="@{/vendedor/cliente}">Mantener Cliente</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/vendedor/producto}">Consultar Producto</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/vendedor/proveedor}">Consultar Proveedor</a></li>
+            <li class="nav-item"><a class="nav-link" th:href="@{/vendedor/venta}">Generar Reportes</a></li>
+        </ul>
+    </div>
+</nav>
+
+ <div class="container mt-4">
+    <h2>Editar Venta</h2>
+    <form th:action="@{/edit/{id}(id=${venta.idventa})}" th:object="${venta}" method="post">
+        <input type="hidden" th:field="*{idventa}"/>
+
+       <div class="form-group">
+            <label>Cliente</label>
+            <select th:field="*{cliente.idClie}" class="form-control" required>
+                <option th:each="c : ${clientes}" th:value="${c.idClie}" th:text="${c.nombre}" 
+                        th:selected="${c.idClie == venta.cliente.idClie}"></option>
+            </select>
+       </div>
+
+       <div class="form-group">
+            <label>Producto</label>
+         		<select th:field="*{producto.idProd}" class="form-control" required>
+                   <option th:each="p : ${productos}" th:value="${p.idProd}" th:text="${p.descripcion} + ' (Stock: ' + ${p.stock} + ')'" 
+                        th:selected="${p.idProd == venta.producto.idProd}"></option>
+            </select>
+        </div>
+
+     <div class="form-group">
+            <label>Proveedor</label>
+            <select th:field="*{proveedor.idprov}" class="form-control" required>
+                <option th:each="pr : ${proveedores}" th:value="${pr.idprov}" th:text="${pr.nomprov}" 
+                        th:selected="${pr.idprov == venta.proveedor.idprov}"></option>
+            </select>
+        </div>
+
+       <div class="form-group">
+            <label>Cantidad</label>
+            <input type="number" th:field="*{cantidad}" class="form-control" required>
+        </div>
+
+           <button type="submit" class="btn btn-primary">Actualizar</button>
+        <a th:href="@{/vendedor/venta}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+</body>
+</html>
